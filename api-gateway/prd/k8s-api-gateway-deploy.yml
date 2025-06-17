@@ -1,5 +1,5 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: Deployment #+config +secret
 metadata:
   name: k8s-api-gateway-deployment
 spec:
@@ -18,16 +18,16 @@ spec:
           imagePullPolicy: Always
           env:
             - name: SPRING_PROFILES_ACTIVE
-              value: prd
+              value: dev
           ports:
             - containerPort: 8080
-
           volumeMounts:
             - name: api-gateway-config-volume
               mountPath: /etc/config
+              readOnly: true
             - name: api-gateway-secret-volume
               mountPath: /etc/secret
-
+              readOnly: true
       volumes:
         - name: api-gateway-config-volume
           configMap:
